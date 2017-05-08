@@ -460,6 +460,7 @@ var DATABASE = {
     "pricePoints" :   [
         {
         "price" : amfCostPerNetUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/mosquitoNets.png",
         "color" : "green",
         "text" :   {
@@ -470,6 +471,7 @@ var DATABASE = {
         },
         {
         "price" : (amfCostPerNetUsd / amfPeopleProtectedPerNet),
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/helpingPeople.png",
         "color" : "red",
         "joiner" : "which",
@@ -481,6 +483,7 @@ var DATABASE = {
         },
         {
         "price" : amfCostPerLifeSavedUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/heartHands.png",
         "color" : "red",
         "joiner" : "or",
@@ -506,6 +509,7 @@ var DATABASE = {
     "pricePoints" :   [
         {
         "price" : dtwCostPerChildDewormedUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/helpingPeople.png",
         "color" : "red",
         "text" :   {
@@ -529,23 +533,25 @@ var DATABASE = {
     "pricePoints" :   [
         {
         "price" : 1.000,
+        "fractionType": "decimal",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/giving.png",
         "color" : "green",
         "text" :   {
-          "fraction": "Provide 0 USD cash directly to people to use as they wish.",
+          "fraction": "Provide * USD cash directly to people to use as they wish.",
           "single" : "Provide 1 USD cash directly to people to use as they wish.",
           "plural" : "Provide * USD cash directly to people to use as they wish."
           }
         },
         {
         "price" : gdHouseholdYearlyIncomeUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/family.png",
         "color" : "green",
         "joiner" : "or",
         "text" :   {
           "fraction": "*% of the cost of funding one household with a cash grant equivalent to a year's income.",
           "single" : "Fund a household with a cash grant equivalent to a year's income.",
-          "plural" : "Fund * household with a cash grant equivalent to a year's income."
+          "plural" : "Fund * households with a cash grant equivalent to a year's income."
           }
         }
       ]
@@ -563,6 +569,7 @@ var DATABASE = {
     "pricePoints" :   [
         {
         "price" : sciCostPerChildProtectedUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/medical.png",
         "color" : "red",
         "text" :   {
@@ -801,10 +808,16 @@ function calcImpact(charity, amount) {
 
     if(impactAmount < 1)
     {
+      var impactMultiplier = 1;
+      if(pricePoint.fractionType === "percent")
+      {
+        impactMultiplier = 100;
+      }
+
       pricePointText = pricePoint.text.fraction;
       // If the impact amount is less than 1%, show 2 decimal places,
       // otherwise, use a whole number.
-      impactAmount = (impactAmount < 0.01) ? (impactAmount * 100).toFixed(2): Math.floor(impactAmount * 100);
+      impactAmount = (impactAmount * impactMultiplier < 1) ? (impactAmount * impactMultiplier).toFixed(2): Math.floor(impactAmount * 100);
     } else if (impactAmount < 2) {
       pricePointText = pricePoint.text.single;
       impactAmount = Math.floor(impactAmount);
