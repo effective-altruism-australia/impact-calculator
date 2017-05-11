@@ -400,17 +400,15 @@ img.result__icon{
     <div class="ic-wrapper">
       <article class="disclaimer__section">
         <h1 class="disclaimer__section__heading">Our Process</h1>
-        <p>We designed this Impact Calculator to help answer the first question on a donor's mind: where does my money go? While it's easy to focus on overhead percentages, the real impact of a charity is reflected in what that charity can do with its budget.
-          A donor who cares about reducing extreme poverty has hundreds of organizations to choose from &ndash; some of which are thousands of times more effective than others. Our Impact Calculator highlights the work of a few of the world's most effective
-          charities, allowing you to compare each organization &ndash; and the evidence supporting each intervention &ndash; side by side.</p>
+        <p>We designed this Impact Calculator to help answer the first question on a donor's mind: where does my money go? While it's easy to focus on overhead percentages, the real impact of a charity is reflected in what that charity can do with its budget. A donor who cares about reducing extreme poverty has hundreds of organizations to choose from - some of which are thousands of times more effective than others. Our Impact Calculator highlights the work of a few of the world's most effective charities, allowing you to compare each organization - and the evidence supporting each intervention - side by side.</p>
         <p>Effective Altruism Australia's objective is to help others as much as possible for every dollar donated. To do this we support charities that are consistently ranked as highly cost effective by independent charity evaluators such as GiveWell, Giving What We Can, and The Life You Can Save. Because of their focus on transparency, commitment to evaluation and follow-up, and scaling of proven interventions, we have high confidence that these charities can reliably transform the lives of the worst off.</p>
-        <p>Determining a charity's cost-effectiveness can be a complicated endeavor, and we could never hope to reflect our recommended charities' full impact in one simple online tool. Instead, we've tried to create a starting point you can use in order
-          to kickstart your investigation into impact-oriented philanthropy. We encourage you to use this as one resource among many in your charity assessments.</p>
+        <p>Determining a charity's cost-effectiveness can be a complicated endeavor, and we could never hope to reflect our recommended charities' full impact in one simple online tool. Instead, we've tried to create a starting point you can use in order to kickstart your investigation into impact-oriented philanthropy. We encourage you to use this as one resource among many in your charity assessments.</p>
+        <p>All prices listed here are in Australian Dollars. When converting from source prices listed in USD, we used the average exchange rate over 2016 as listed on <a href="https://www.oanda.com/currency/average">OANDA</a>.</p>
         <p>For more information on our process, see our <a href="/charities">Partner Charities</a> page or <a href="/FAQ">FAQ</a>.</p>
       </article>
       <article class="disclaimer__section">
         <h1 class="disclaimer__section__heading">Acknowledgements</h1>
-        <p>Thank you to everyone at <a href="https://www.thelifeyoucansave.org/">The Life You Can Save</a>, your and our volunteers who spent countless hours making this calculator function. This wouldn't be possible without you; thank you! </p>
+        <p>Thank you to everyone at <a href="https://www.thelifeyoucansave.org/">The Life You Can Save</a>, <a href="http://www.rhokaustralia.org/">Random Hacks of Kindness</a>, and all the volunteers who spent countless hours making this calculator function. This wouldn't be possible without you; thank you!</p>
       </article>
     </div>
   </section>
@@ -429,6 +427,23 @@ t=o.length;t--;)o[t].elem===this&&o[t].queue===e&&(o[t].anim.stop(!0),o.splice(t
   <script type="text/javascript">
 'use strict';
 
+var usdToAudExchangeRate = 0.744;
+
+// Against Malaria Foundation (AMF)
+var amfCostPerNetUsd = 4.85;
+var amfPeopleProtectedPerNet = 1.8;
+var amfCostPerLifeSavedUsd = 3000;
+
+// Deworm the World
+var dtwCostPerChildDewormedUsd = 0.55
+
+// Give GiveDirectly
+var gdOverheadPercent = 0.18
+var gdHouseholdYearlyIncomeUsd = 1220
+
+// Schistosomiasis Control Initiative (SCI)
+var sciCostPerChildProtectedUsd = 0.49
+
 // Input
 var DATABASE = {
   "charities" : [
@@ -439,80 +454,68 @@ var DATABASE = {
     "infoURL" : "https://effectivealtruism.org.au/charities",
     "donateURL" : "http://www.againstmalaria.com/Money.aspx?GroupID=86",
     "logo" : "e600",
-    "organization" : "The Against Malaria Foundation (AMF) provides long-lasting insecticide-treated nets (LLINs) as protection against malaria. Malaria, transmitted via infected mosquitoes, kills at least half a million people every year according to the World Health Organization (WHO) (many put the number at more than a million) and affects the health of as many as half a billion; seventy percent of the deaths are of children under five. It is the world’s largest killer of pregnant women, one of the leading causes of child deaths in Africa and a major obstacle to social and economic development in sub-Saharan Africa, where 90% of malaria deaths occur.",
+    "organization" : "The Against Malaria Foundation (AMF) provides long-lasting insecticide-treated nets (LLINs) as protection against malaria. Malaria, transmitted via infected mosquitoes, kills just under half a million people every year according to the " + buildUrl("http://www.who.int/malaria/media/world-malaria-report-2016/en/", "World Health Organization (WHO)") + "; seventy percent of the deaths are of children under five. It is one of the world's largest killers of pregnant women, one of the leading causes of child deaths in Africa and a major obstacle to social and economic development in sub-Saharan Africa, where 90% of malaria deaths occur.",
     "recommendation" : "GiveWell, widely considered the most rigorous charity evaluator in the world, recommends AMF as one of their top charities based on their cost-effectiveness and transparency.'",
-    "numbers" : "Each LLIN costs roughly $3, lasts for around three to four years, and protects 1.8 people from malaria on average. Dr. Christen Lengeler of the Swiss Tropical Institute estimates one life is saved for every 160 bednet years, which would equate to one life saved for every 20 bednets. Charity research organization GiveWell has made the much more conservative estimate of $3,400. Public donations to AMF are used exclusively to fund bednets, so AMF has an effective overhead rate of 0% (non-net costs are fundraised for separately).",
+    "numbers" : "It costs around AUD 3.32 for " + buildUrl("https://www.againstmalaria.com/DollarsPerNet.aspx", "AMF to buy one LLIN") + ". When the costs of AMF's distribution partners are taken into account, it is estimated that AUD 6.45 will cover the cost of purchase and distribution of one LLIN. On average this will protect " + buildUrl("http://www.givewell.org/international/technical/programs/insecticide-treated-nets#HowcosteffectiveisLLINdistribution", "1.8 people for 2 to 3 years") + ". While it's difficult to accurately determine how much it costs for a program to save a life, the charity research organization GiveWell has suggested that every AUD 4000 donated to AMF, causes health benefits equivalent to saving one life. All public donations to AMF are used exclusively to fund bed nets, so AMF has an effective overhead rate of 0% (non-net costs are fundraised for separately). <br/><br/> You can learn more about AMF in this " + buildUrl("https://effectivealtruism.org.au/node/43", "blog post") + ".",
     "pricePoints" :   [
         {
-        "price" : 3.000,
+        "price" : amfCostPerNetUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/mosquitoNets.png",
         "color" : "green",
         "text" :   {
+          "fraction": "*% of the cost of a bednet to protect against malaria",
           "single" : "Provide a bednet to protect against malaria...",
           "plural" : "Provide * bednets to protect against malaria..."
           }
         },
         {
-        "price" : 1.660,
+        "price" : (amfCostPerNetUsd / amfPeopleProtectedPerNet),
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/helpingPeople.png",
         "color" : "red",
         "joiner" : "which",
         "text" :   {
-          "single" : "will protect someone for 3-4 years.",
-          "plural" : "will protect * people for 3-4 years."
+          "fraction": "will protect someone for 2-3 years.",
+          "single" : "will protect someone for 2-3 years.",
+          "plural" : "will protect * people for 2-3 years."
           }
         },
         {
-        "price" : 3337.000,
+        "price" : amfCostPerLifeSavedUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/heartHands.png",
         "color" : "red",
         "joiner" : "or",
         "text" :   {
-          "single" : "Save * life, according to GiveWell.",
-          "plural" : "Save * lives, according to GiveWell."
+           "fraction" : "*% the cost of the health equivalent of saving a life, according to GiveWell.",
+          "single" : "The health equivalent of saving a life, according to GiveWell.",
+          "plural" : "The health equivalent of saving * lives, according to GiveWell."
           }
         }
       ]
     },
 
     {
-    "name" : "Evidence Action",
-    "id" : "evidence-action",
+    "name" : "Deworm the World",
+    "id" : "deworm-the-world",
     "overhead" : 0.000,
     "infoURL" : "https://effectivealtruism.org.au/charities",
     "donateURL" : "/donate",
     "logo" : "e602",
-    "organization" : "Evidence Action oversees three main initiatives: Dispensers for Safe Water is a sustainable rural water service that maintains chlorine dispensers directly at the water source, ensuring access to safe drinking water for more than 3 million people in rural Kenya, Uganda, and Malawi. Deworm the World Initiative works with governments to support national school-based deworming programs that treat more than 160 million children for parasitic worm infections annually in India, Kenya, Vietnam, and Ethiopia. Evidence Action is dedicated to making their programs sustainable for the long-term. We have partnered with Evidence Action to help scale their deworming programs. Over 1 million children are at risk of being infected with parasitic worms. Deworm the World protects children from parasitic worms for an annual cost of $0.10 per child (weighted average cost Evidence Action incurs, across geographies).",
+    "organization" : "Deworm the World Initiative works with governments to support national school-based deworming programs that treat more than 160 million children for parasitic worm infections annually in India, Kenya, Vietnam, and Ethiopia. Evidence Action is dedicated to scaling up cost-effective interventions that are supported by rigorous evidence. They oversees three initiatives, however we have partnered with Evidence Action to help scale their deworming programs as these are considered to be particularly cost-effective.",
     "recommendation" : "GiveWell, widely considered the most rigorous charity evaluator in the world, recommends Evidence Action as one of their top charities based on their cost-effectiveness and transparency.",
-    "numbers" : "A randomized trial in Kenya found that deworming reduced student absenteeism by 25%, increased future wage earnings by 23% and increased adult work hours by 12%.  A recent study from the Harvard School of Public Health found that students in deworming treatment areas performed better on literacy and numeracy tests as compared with other students 7-8 years after the end of their deworming treatment. Evidence Action Beta directly support pressure-testing specific, promising anti-poverty and health interventions in field trials and scale-up of those proving successful. Evidence Action has an overhead rate of roughly 12% which is included in all statements regarding cost (so there is no need to subtract overhead costs before calculating the cost per person served).  Keep in mind that the overhead ratio is not a direct measurement of charity effectiveness.",
+    "numbers" : "Deworm the World protects children from parasitic worms for an annual cost of between AUD 0.13 to AUD 0.73 per child, depending on geographic location. " + buildUrl("https://www.evidenceaction.org/dewormtheworld#the-evidence-for-deworming", "A randomized trial in Kenya") + " found that deworming reduced student absenteeism by 25%, increased future wage earnings by 23% and increased adult work hours by 12%. " + buildUrl("http://scholar.harvard.edu/files/kcroke/files/ug_lr_deworming_071714.pdf", "A recent study") + " from the Harvard School of Public Health found that students in deworming treatment areas performed better on literacy and numeracy tests as compared with other students 7-8 years after the end of their deworming treatment. A thorough discussion of the strengths and weaknesses of the evidence behind deworming can be found " + buildUrl("http://blog.givewell.org/2016/12/06/why-i-mostly-believe-in-worms/", "here") + ".<br/><br/> You can learn more about Deworm the World in this " + buildUrl("https://effectivealtruism.org.au/node/42", "blog post"),
     "pricePoints" :   [
         {
-        "price" : 0.100,
+        "price" : dtwCostPerChildDewormedUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/helpingPeople.png",
         "color" : "red",
         "text" :   {
+          "fraction": "*% of the cost of deworming one child",
           "single" : "Deworm a child",
           "plural" : "Deworm * children"
-          }
-        },
-        {
-        "price" : 0.840,
-        "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/ea-water.png",
-        "color" : "blue",
-        "joiner" : "or",
-        "text" :   {
-          "single" : "Provide safe water to 1 person for a year",
-          "plural" : "Provide safe water to * people for a year"
-          }
-        },
-        {
-        "price" : 1.000,
-        "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/pif-interventions.png",
-        "color" : "green",
-        "joiner" : "or",
-        "text" :   {
-          "single" : "Channel $1 towards effective poverty interventions",
-          "plural" : "Channel $* towards effective poverty interventions"
           }
         }
       ]
@@ -520,31 +523,35 @@ var DATABASE = {
     {
     "name" : "GiveDirectly",
     "id" : "givedirectly",
-    "overhead" : 0.090,
+    "overhead" : gdOverheadPercent,
     "infoURL" : "https://effectivealtruism.org.au/charities",
     "donateURL" : "/donate",
     "logo" : "e606",
-    "organization" : "GiveDirectly provides unconditional cash transfers to extremely poor households in Kenya and Uganda. Recipients are selected using objective criteria like housing material. GiveDirectly then transfers US$1,000 directly to recipients using mobile payments technology, and recipients use the money to pursue their own goals. Recipients use their transfers for a range of purchases, food, medical and education expenses, durables, home improvement, social events, iron roofs, livestock, and furniture.",
+    "organization" : "GiveDirectly provides unconditional cash transfers to extremely poor households in Kenya and Uganda. Recipients are selected using objective criteria like housing material. GiveDirectly then transfers US$1,000 directly to recipients using mobile payments technology, and recipients use the money to pursue their own goals. " + buildUrl("https://www.givedirectly.org/research-at-give-directly", "Rigorous evaluation") + " has shown that recipients use their transfers for a range of purchases, including food, medical and education expenses, durables, home improvement, social events, iron roofs, livestock, and furniture.",
     "recommendation" : "GiveWell, widely considered the most rigorous charity evaluator in the world, recommends GiveDirectly as one of their top charities based on their cost-effectiveness and transparency.'",
-    "numbers" : "Cash transfers are one of the most thoroughly researched anti-poverty tools.  Dozens of high-quality studies have found that cash transfers improve a range of outcomes including child health and schooling, nutrition, and income. GiveDirectly is committed to transparently measuring and improving its impact through randomized controlled trials (the &quot;gold standard&quot; in social sciences research). By targeting the extreme poor (recipients live on $0.65 a day on average), GiveDirectly enables recipients to transform their lives with the cash transfer. GiveDirectly delivers 91% of each donated dollar directly to recipients, and uses the remaining 9% to cover all delivery costs including staff wages, transfer fees, and other costs traditionally considered &quot;overhead.&quot;",
+    "numbers" : "Cash transfers are one of the most " + buildUrl("http://www.givewell.org/international/technical/programs/cash-transfers", "thoroughly researched") + " anti-poverty tools. Dozens of high-quality studies have found that cash transfers improve a range of outcomes including child health and schooling, nutrition, and income. GiveDirectly selects the extreme poor as recipients of their cash transfers. On average, a recipient lives on about " + buildUrl("http://www.givewell.org/charities/give-directly#CashRatios", "AUD 0.90 - 1.15 per day") + " which, when adjusting for differences in cost of living, is roughly equivalent to living on AUD 2.64 - 4.15 per day in Australia, with that amount covering all costs: food, rent, education, clothing, entertainment, utilities etc. GiveDirectly delivers approximately 88% of each donated dollar directly to recipients, and uses the remaining 12%  funds to cover all delivery costs including staff wages, transfer fees, cost of research and other costs traditionally considered \"overhead.\" It's worth remembering that an Australian Dollar generally carries a lot more value overseas, especially in low-income countries. Even though 1 AUD exchanges for 2,500 Ugandan Shillings, you can buy a lot more with 2,500 shillings in Uganda, than you can with 1 dollar in Australia. In fact, having 2,500 shillings in Uganda is roughly equivalent to having AUD 3.50 in Australia. So, in donating to GiveDirectly you can effectively triple the value of your dollar. This effect is generally seen when you donate to organisations working in low-countries, such as all our partner organisations. They can do more with your dollar.<br/></br> You can learn more about GiveDirectly in this " + buildUrl("https://effectivealtruism.org.au/blog/GiveDirectly-largest-basic-income-trial-history", "blog post") + ".",
     "pricePoints" :   [
         {
         "price" : 1.000,
+        "fractionType": "decimal",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/giving.png",
         "color" : "green",
         "text" :   {
+          "fraction": "Provide * USD cash directly to people to use as they wish.",
           "single" : "Provide 1 USD cash directly to people to use as they wish.",
-          "plural" : "Provide * USD directly to people to use as they wish."
+          "plural" : "Provide * USD cash directly to people to use as they wish."
           }
         },
         {
-        "price" : 1000.000,
+        "price" : gdHouseholdYearlyIncomeUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/family.png",
         "color" : "green",
         "joiner" : "or",
         "text" :   {
-          "single" : "Fund a family for up to 2 years.",
-          "plural" : "Fund * families for up to 2 years."
+          "fraction": "*% of the cost of funding one household with a cash grant equivalent to a year's income.",
+          "single" : "Fund a household with a cash grant equivalent to a year's income.",
+          "plural" : "Fund * households with a cash grant equivalent to a year's income."
           }
         }
       ]
@@ -556,15 +563,17 @@ var DATABASE = {
     "infoURL" : "https://effectivealtruism.org.au/charities",
     "donateURL" : "/donate",
     "logo" : "e60e",
-    "organization" : "Worms and other parasitic and bacterial Neglected Tropical Diseases (NTDs) affect two billion people worldwide, most of whom live on less than $2 a day. The most deadly of these is schistosomiasis, which ranks second only to malaria as the most common parasitic disease, killing 280,000 people a year. Another 300 million, roughly the population of the United States, suffer from severe illness, and half of those are school-aged children. NTDs are responsible for a range of serious health problems from malnutrition, to impaired cognitive development, to blindness. They can increase the morbidity and mortality of malaria, tuberculosis and HIV/AIDS, and infected children are often too sick to attend school.  Schistosomiasis Control Initiative (SCI) works with governments across sub-Saharan Africa to create or scale up mass school-based deworming programs, which have a strong track record of success. These programs provide school children with pills that protect against the most prevalent NTDs.",
+    "organization" : "Worms and other parasitic and bacterial Neglected Tropical Diseases (NTDs) affect two billion people worldwide, most of whom live on less than $2 a day. The most deadly of these is " + buildUrl("http://www.who.int/mediacentre/factsheets/fs115/en/", "schistosomiasis") + ", which the WHO estimates is responsible for 200,000 deaths a year. Another 300 million, roughly the population of the United States, suffer from severe illness, and half of those are school-aged children. NTDs are responsible for a range of serious health problems from malnutrition, to impaired cognitive development, to blindness. They can increase the morbidity and mortality of malaria, tuberculosis and HIV/AIDS, and infected children are often too sick to attend school. Schistosomiasis Control Initiative (SCI) works with governments across sub-Saharan Africa to create or scale up mass school-based deworming programs, which have a strong track record of success. These programs provide school children with pills that protect against the most prevalent NTDs.",
     "recommendation" : "GiveWell, widely considered the most rigorous charity evaluator in the world, recommends SCI as one of their top charities based on their cost-effectiveness and transparency.",
-    "numbers" : "Deworming helps improve both a child’s health and education. A randomized trial in Kenya found that deworming reduced student absenteeism by 25%, increased future wage earnings by 23% and increased adult work hours by 12%. A recent study from the Harvard School of Public Health found that students in deworming treatment areas performed better on literacy and numeracy tests as compared with other students 7-8 years after the end of their deworming treatment. Since its inception in 2002, SCI has facilitated dispensing over 140 million deworming treatments-- 40 million alone in 2014. One pharmaceutical company (Merck KGaA) will donate 100 million treatments annually from 2016, more than double the number that has been treated in any one year to date. SCI therefore needs to ramp up funding to cover the costs of advocacy, training, delivery and data collection in order to help reach this record-breaking number of children in poverty. With sufficient donation support, SCI projects its programming will reach 50 million children per year by the end of 2015, and grow to include 60 million per year by 2017.<br/><br/>These programs are highly cost-effective, averaging about $0.80 per child per year. Overhead costs are 14% of SCI’s total budget (keep in mind that the overhead ratio is not a direct measurement of charity effectiveness). All costs, including overheads, have been factored into the $0.80 per child per year estimate.",
+    "numbers" : "GiveWell estimates that the cost to per child treated is AUD 0.65, although this price doesn't include the government contribution to the program or the cost of the drugs, which are usually donated by the manufacturers. There is " + buildUrl("http://www.givewell.org/international/technical/programs/deworming#What_are_the_benefits_of_mass_deworming", "evidence") + " that mass-deworming programs improve educational outcomes and children's future earning potential. " + buildUrl("http://scholar.harvard.edu/files/kcroke/files/ug_lr_deworming_071714.pdf", "A recent study") + " from the Harvard School of Public Health found that students in deworming treatment areas performed better on literacy and numeracy tests as compared with other students 7-8 years after the end of their deworming treatment. A thorough discussion of the strengths and weaknesses of the evidence behind deworming can be found here. <br/><br/>You can learn more about the Schistosomiasis Control Initiative in this " + buildUrl("https://effectivealtruism.org.au/node/42", "blog post") + ".",
     "pricePoints" :   [
         {
-        "price" : 0.800,
+        "price" : sciCostPerChildProtectedUsd,
+        "fractionType": "percent",
         "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/medical.png",
         "color" : "red",
         "text" :   {
+          "fraction": "*% of the cost of protecting a child from schistosomiasis for 1 year.",
           "single" : "Protect a child from schistosomiasis for 1 year.",
           "plural" : "Protect * children from schistosomiasis for one year."
           }
@@ -650,6 +659,16 @@ $(function() {
 // Constants
 var AMOUNT_INPUT = '.amount__input',
     CHARITY_SELECT = '.charities';
+
+/**
+ * Builds a URL
+ * @param  {link} the URL
+ * @param  {anchor} the anchor text
+ */
+function buildUrl(link, anchor)
+{
+  return '<a href="' + link + '">' + anchor + '</a>';
+}
 
 /**
  * Fetch URL parameters
@@ -786,12 +805,7 @@ function calcImpact(charity, amount) {
       localisedAmount;
 
   // localise the input
-  if (typeof geoplugin_currencyConverter === 'function') {
-    exchangeRate = 1 / geoplugin_currencyConverter(1, false);
-    localisedAmount = amount * exchangeRate;
-  } else {
-    localisedAmount = amount * 0.75;
-  }
+  localisedAmount = amount * usdToAudExchangeRate;
 
   // Calculate usable donation
   overhead = 1.0 - charity.overhead;
@@ -799,26 +813,36 @@ function calcImpact(charity, amount) {
 
   charity.pricePoints.forEach(function(pricePoint){
 
-    if (usableDonation >= pricePoint.price) {
-      var n = Math.floor(usableDonation / pricePoint.price);
+    var impactAmount = usableDonation / pricePoint.price;
+    var pricePointText;
 
-      impacts.push({
-        amount: n,
-        text: n === 1 ? pricePoint.text.single : pricePoint.text.plural,
-        icon: pricePoint.iconURL,
-        joiner: pricePoint.joiner || false,
-        color: pricePoint.color
-      });
+    if(impactAmount < 1)
+    {
+      var impactMultiplier = 1;
+      if(pricePoint.fractionType === "percent")
+      {
+        impactMultiplier = 100;
+      }
 
-    } else {
-      impacts.push({
-        amount: '',
-				text: 'Want to make a bigger difference? Increase your donation!',
-				icon: pricePoint.iconURL,
-        joiner: false,
-        color: pricePoint.color
-      });
+      pricePointText = pricePoint.text.fraction;
+      // If the impact amount is less than 1%, show 2 decimal places,
+      // otherwise, use a whole number.
+      impactAmount = (impactAmount * impactMultiplier < 1) ? (impactAmount * impactMultiplier).toFixed(2): Math.floor(impactAmount * 100);
+    } else if (impactAmount < 2) {
+      pricePointText = pricePoint.text.single;
+      impactAmount = Math.floor(impactAmount);
+    }  else {
+      pricePointText = pricePoint.text.plural;
+      impactAmount = Math.floor(impactAmount);
     }
+
+    impacts.push({
+      amount: impactAmount,
+      text: pricePointText,
+      icon: pricePoint.iconURL,
+      joiner: pricePoint.joiner || false,
+      color: pricePoint.color
+    });
 
   });
 
