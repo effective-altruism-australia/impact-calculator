@@ -384,7 +384,7 @@ img.result__icon{
       <div class="output__info">
         <a href="" class="info__donate" id="donate">DONATE</a>
         <article class="info__content">
-          <h1 class="info__content__heading">The Organization</h1>
+          <h1 class="info__content__heading">The Organisation</h1>
           <p class="info__content__text" id="organization-content">&nbsp;</p>
         </article>
         <article class="info__content">
@@ -400,7 +400,7 @@ img.result__icon{
     <div class="ic-wrapper">
       <article class="disclaimer__section">
         <h1 class="disclaimer__section__heading">Our Process</h1>
-        <p>We designed this Impact Calculator to help answer the first question on a donor's mind: where does my money go? While it's easy to focus on overhead percentages, the real impact of a charity is reflected in what that charity can do with its budget. A donor who cares about reducing extreme poverty has hundreds of organizations to choose from - some of which are thousands of times more effective than others. Our Impact Calculator highlights the work of a few of the world's most effective charities, allowing you to compare each organization - and the evidence supporting each intervention - side by side.</p>
+        <p>We designed this Impact Calculator to help answer the first question on a donor's mind: where does my money go? While it's easy to focus on overhead percentages, the real impact of a charity is reflected in what that charity can do with its budget. A donor who cares about reducing extreme poverty has hundreds of organisations to choose from - some of which are thousands of times more effective than others. Our Impact Calculator highlights the work of a few of the world's most effective charities, allowing you to compare each organisation - and the evidence supporting each intervention - side by side.</p>
         <p>Effective Altruism Australia's objective is to help others as much as possible for every dollar donated. To do this we support charities that are consistently ranked as highly cost effective by independent charity evaluators such as GiveWell, Giving What We Can, and The Life You Can Save. Because of their focus on transparency, commitment to evaluation and follow-up, and scaling of proven interventions, we have high confidence that these charities can reliably transform the lives of the worst off.</p>
         <p>Determining a charity's cost-effectiveness can be a complicated endeavor, and we could never hope to reflect our recommended charities' full impact in one simple online tool. Instead, we've tried to create a starting point you can use in order to kickstart your investigation into impact-oriented philanthropy. We encourage you to use this as one resource among many in your charity assessments.</p>
         <p>All prices listed here are in Australian Dollars. When converting from source prices listed in USD, we used the average exchange rate over 2016 as listed on <a href="https://www.oanda.com/currency/average">OANDA</a>.</p>
@@ -432,7 +432,7 @@ var usdToAudExchangeRate = 0.744;
 // Against Malaria Foundation (AMF)
 var amfCostPerNetUsd = 4.85;
 var amfPeopleProtectedPerNet = 1.8;
-var amfCostPerLifeSavedUsd = 3000;
+var amfCostPerLifeSavedUsd = 3202.92;
 
 // Deworm the World
 var dtwCostPerChildDewormedUsd = 0.55
@@ -443,6 +443,9 @@ var gdHouseholdYearlyIncomeUsd = 1220
 
 // Schistosomiasis Control Initiative (SCI)
 var sciCostPerChildProtectedUsd = 0.49
+
+// Malaria Consortium
+var mcCostPerChild = 4.76
 
 // Input
 var DATABASE = {
@@ -456,7 +459,7 @@ var DATABASE = {
     "logo" : "e600",
     "organization" : "The " + buildUrl("https://www.againstmalaria.com/", "Against Malaria Foundation (AMF)") + " provides long-lasting insecticide-treated nets (LLINs) as protection against malaria. Malaria, transmitted via infected mosquitoes, kills just under half a million people every year according to the " + buildUrl("http://www.who.int/malaria/media/world-malaria-report-2016/en/", "World Health Organization (WHO)") + "; 70% of the deaths are of children under five. It is one of the world's largest killers of pregnant women, one of the leading causes of child deaths in Africa and a major obstacle to social and economic development in sub-Saharan Africa, where 90% of malaria deaths occur.",
     "recommendation" : "GiveWell, widely considered the most rigorous charity evaluator in the world, recommends AMF as one of their top charities based on their cost-effectiveness and transparency.'",
-    "numbers" : "It costs around AUD 3.30 for " + buildUrl("https://www.againstmalaria.com/DollarsPerNet.aspx", "AMF to buy one LLIN") + ". When the costs of AMF's distribution partners are taken into account, it is estimated that AUD 6.50 will cover the cost of purchase and distribution of one LLIN. On average this will protect " + buildUrl("http://www.givewell.org/international/technical/programs/insecticide-treated-nets#HowcosteffectiveisLLINdistribution", "1.8 people for 2 to 3 years") + ". While it's difficult to accurately determine how much it costs for a program to save a life, the charity research organization GiveWell has suggested that every AUD 4000 donated to AMF, causes health benefits equivalent to saving one life. All public donations to AMF are used exclusively to fund bed nets, so AMF has an effective overhead rate of 0% (non-net costs are fundraised for separately). <br/><br/> You can learn more about AMF in this " + buildUrl("https://effectivealtruism.org.au/node/43", "blog post") + ".",
+    "numbers" : "It costs around AUD 3.30 for " + buildUrl("https://www.againstmalaria.com/DollarsPerNet.aspx", "AMF to buy one LLIN") + ". When the costs of AMF's distribution partners are taken into account, it is estimated that AUD 6.50 will cover the cost of purchase and distribution of one LLIN. On average this will protect " + buildUrl("http://www.givewell.org/international/technical/programs/insecticide-treated-nets#HowcosteffectiveisLLINdistribution", "1.8 people for 2 to 3 years") + ". While it's difficult to accurately determine how much it costs for a program to save a life, the charity research organisation GiveWell has suggested that every AUD 4000 donated to AMF, causes health benefits equivalent to saving one life. All public donations to AMF are used exclusively to fund bed nets, so AMF has an effective overhead rate of 0% (non-net costs are fundraised for separately). <br/><br/> You can learn more about AMF in this " + buildUrl("https://effectivealtruism.org.au/node/43", "blog post") + ".",
     "pricePoints" :   [
         {
         "price" : amfCostPerNetUsd,
@@ -576,6 +579,30 @@ var DATABASE = {
           "fraction": "*% of the cost of protecting a child from schistosomiasis for 1 year.",
           "single" : "Protect a child from schistosomiasis for 1 year.",
           "plural" : "Protect * children from schistosomiasis for one year."
+          }
+        }
+      ]
+    },
+    {
+    "name" : "Malaria Consortium",
+    "id" : "malaria-consortium",
+    "overhead" : 0.000,
+    "infoURL" : "https://effectivealtruism.org.au/charities",
+    "donateURL" : "/donate",
+    "logo" : "e60e",
+    "organization" : buildUrl("http://www.malariaconsortium.org/", "Malaria Consortium") + " conducts a range of programs for the prevention, control and treatment of malaria and other communicable diseases. Malaria, a disease transmitted via infected mosquitoes, kills just under " + buildUrl("http://www.who.int/malaria/media/world-malaria-report-2016/en/", "half a million people every year") + ", with children under five the most vulnerable to infection. Part of Malaria Consortium's approach to malaria prevention is supporting seasonal malaria chemoprevention (SMC) programs in areas where the malaria burden is particularly high for a few months of the year, an approach " + buildUrl("http://www.who.int/malaria/publications/atoz/who_smc_policy_recommendation/en/", "recommended by the World Health Organization") + ". We have partnered with Malaria Consortium to support SMC programs as these are considered " + buildUrl("http://www.givewell.org/international/technical/programs/seasonal-malaria-chemoprevention", "to be particularly cost-effective") + ".",
+    "recommendation" : "GiveWell, widely considered the most rigorous charity evaluator in the world, recommends Malaria Consortium as one of their top charities based on their cost-effectiveness and transparency.",
+    "numbers" : "Malaria Consortium focuses its SMC programs in the Sahel region of Africa, where the majority of malaria infections occur in the four-month long rainy season. The cost of protecting a child from malaria in this period is estimated to be between " + buildUrl("http://www.givewell.org/charities/malaria-consortium#Cost_for_SMC_coverage", "AUD 4.64 and AUD 8.16") + ". " + buildUrl("https://www.mmv.org/sites/default/files/uploads/docs/access/SMC_Tool_Kit/publications/Meremikww-ipt-review.pdf", "Scientific reviews") + " suggest that SMC programs are effective in reducing cases of malaria, preventing around 75% of cases, including severe cases. It is estimated that over " + buildUrl("http://www.who.int/malaria/areas/preventive_therapies/children/en/", "25 million children") + " in the Sahel region would benefit from SMC. However, many children are not currently being reached due to current " + buildUrl("http://www.givewell.org/charities/malaria-consortium#GlobalNeed", "lack of funds") + ".",
+    "pricePoints" :   [
+        {
+        "price" : mcCostPerChild,
+        "fractionType": "percent",
+        "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/medical.png",
+        "color" : "red",
+        "text" :   {
+          "fraction": "*% of the cost of protecting a child from malaria for 1 year.",
+          "single" : "Protect a child from malaria for 1 year.",
+          "plural" : "Protect * children from malaria for one year."
           }
         }
       ]
