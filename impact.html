@@ -427,25 +427,28 @@ t=o.length;t--;)o[t].elem===this&&o[t].queue===e&&(o[t].anim.stop(!0),o.splice(t
   <script type="text/javascript">
 'use strict';
 
-var usdToAudExchangeRate = 0.744;
+var usdToAudExchangeRate = 0.730;
 
 // Against Malaria Foundation (AMF)
-var amfCostPerNetUsd = 4.85;
+var amfCostPerNetUsd = 4.95;
 var amfPeopleProtectedPerNet = 1.8;
-var amfCostPerLifeSavedUsd = 3202.92;
+var amfCostPerLifeSavedUsd = 4450;
 
 // Deworm the World
-var dtwCostPerChildDewormedUsd = 0.55
+var dtwCostPerChildDewormedUsd = 0.5
 
 // Give GiveDirectly
-var gdOverheadPercent = 0.18
-var gdHouseholdYearlyIncomeUsd = 1220
+var gdOverheadPercent = 0.17
+var gdHouseholdYearlyIncomeUsd = 1343.82
 
 // Schistosomiasis Control Initiative (SCI)
-var sciCostPerChildProtectedUsd = 0.49
+var sciCostPerChildProtectedUsd = 0.99
 
 // Malaria Consortium
-var mcCostPerChild = 4.76
+var mcCostPerChild = 7.17
+
+// Helen Keller International
+var hkiCostPerChild = 2.46
 
 // Input
 var DATABASE = {
@@ -603,6 +606,30 @@ var DATABASE = {
           "fraction": "*% of the cost of protecting a child from malaria for 1 year.",
           "single" : "Protect a child from malaria for 1 year.",
           "plural" : "Protect * children from malaria for one year."
+          }
+        }
+      ]
+    },
+    {
+    "name" : "Hellen Keller International",
+    "id" : "hki",
+    "overhead" : 0.000,
+    "infoURL" : "https://effectivealtruism.org.au/charities",
+    "donateURL" : "/donate",
+    "logo" : "e60e",
+    "organization" : buildUrl("https://www.hki.org/", "Hellen Keller International") + " supports government-run vitamin A supplementation (VAS) programs. There is strong evidence that VAS programs reduce child mortality.",
+    "recommendation" : "GiveWell, widely considered the most rigorous charity evaluator in the world, recommends Hellen Keller International as one of their top charities based on their cost-effectiveness and transparency.",
+    "numbers" : "GiveWell estimates " + buildUrl("https://www.givewell.org/charities/helen-keller-international", "it costs AUD 1.10") + " to deliver a vitamin A supplement in HKI-supported programs. This translates to an estimated cost per healthy life saved of AUD 4,016.",
+    "pricePoints" :   [
+        {
+        "price" : hkiCostPerChild,
+        "fractionType": "percent",
+        "iconURL" : "https://raw.githubusercontent.com/RHoKAustralia/effective-altruism-australia/master/Donation%20calculator/img/results/medical.png",
+        "color" : "red",
+        "text" :   {
+          "fraction": "*% of the cost of providing a child with vitamin A supplementation for one year.",
+          "single" : "Provide a child with vitamin A supplementation for one year.",
+          "plural" : "Provide * children with vitamin A supplementation for one year."
           }
         }
       ]
